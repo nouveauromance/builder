@@ -31,117 +31,126 @@ class PizzaBuilder{
         this.molho = null;
         this.recheio = null;
     }
-    adicionarTamanho(medida){
-        let dimensao;
-        switch(Tamanho) {
+
+    adicionarTamanho(medida) {
+      const tamanhoEscolhido = prompt("Escolha o tamanho (brotinho, tradicional, grande):");
+        switch (medida) {
             case "brotinho":
-              tamanho = "Brotinho (20cm)"
-              break;
+                this.tamanho = new Tamanho("Brotinho (20cm)");
+                break;
             case "tradicional":
-              tamanho = "Tradicional (35 cm)"
-              break;
+                this.tamanho = new Tamanho("Tradicional (35 cm)");
+                break;
             case "grande":
-              tamanho = "Grande (45 cm)"
-              break;
+                this.tamanho = new Tamanho("Grande (45 cm)");
+                break;
             default:
-              tamanho = "Escolha uma opção!"
-          }
+                this.tamanho = new Tamanho("Escolha uma opção!");
+        }
+        return this;
     }
-    adicionarMassa(tipo){
-        let opcao;
-        switch(Massa) {
+
+    adicionarMassa(tipo) {
+      const massaEscolhida = prompt("Escolha a massa (tradicional, integral, vegana, light):");
+        switch (tipo) {
             case "tradicional":
-              massa = "Tradicional"
-              break;
+                this.massa = new Massa("Tradicional");
+                break;
             case "integral":
-              massa = "Integral"
-              break;
+                this.massa = new Massa("Integral");
+                break;
             case "vegana":
-              massa = "Vegana"
-              break;
+                this.massa = new Massa("Vegana");
+                break;
             case "light":
-              massa = "Light (zero lactose e glúten)"
-              break;
+                this.massa = new Massa("Light (zero lactose e glúten)");
+                break;
             default:
-              massa = "Escolha uma opção!"
-          }
+                this.massa = new Massa("Escolha uma opção!");
+        }
+        return this;
     }
-    adicionarMolho(condimento){
-        let ingrediente;
-        switch(Molho) {
+   
+    adicionarMolho(condimento) {
+       const condimentoEscolhido = prompt("Escolha o molho (padrão, temperado1, temperado2):");
+        switch (condimento) {
             case "padrão":
-              molho = "Tomate Padrão"
-              break;
+                this.molho = new Molho("Tomate Padrão");
+                break;
             case "temperado1":
-              molho = "Temperado 1"
-              break;
+                this.molho = new Molho("Temperado 1");
+                break;
             case "temperado2":
-              molho = "Temperado 2"
-              break;
+                this.molho = new Molho("Temperado 2");
+                break;
             default:
-              molho = "Escolha uma opção!"
-          }
+                this.molho = new Molho("Escolha uma opção!");
+        }
+        return this;
     }
-    adicionarRecheio(sabor){
-        let gosto;
-        switch(Recheio) {
+    
+    adicionarSabor(sabor) {
+      const saborEscolhido = prompt("Escolha o recheio (mussarela, calabresa, frango, catupiry, atum):");
+        switch (sabor) {
             case "mussarela":
-              recheio = "Queijo mussarela"
-              break;
+                this.recheio = new Recheio("Queijo mussarela");
+                break;
             case "calabresa":
-              recheio = "Calabresa"
-              break;
+                this.recheio = new Recheio("Calabresa");
+                break;
             case "frango":
-              recheio = "Frango"
-              break;
+                this.recheio = new Recheio("Frango");
+                break;
             case "catupiry":
-              recheio = "Catupiry"
-              break;
+                this.recheio = new Recheio("Catupiry");
+                break;
             case "atum":
-              recheio = "Atum"
-              break;
+                this.recheio = new Recheio("Atum");
+                break;
             default:
-              recheio = "Escolha uma opção!"
-          }
-    }
-    construir(){
+                this.recheio = new Recheio("Escolha uma opção!");
+        }
+            return this;
+      }
+    construir() {
         return new Pizza(this.tamanho, this.massa, this.molho, this.recheio);
     }
 }
 
-// construindo pizza:
-class Pizza{
-    constructor(tamanho, massa, molho, recheio){
+// Construindo pizza:
+class Pizza {
+    constructor(tamanho, massa, molho, recheio) {
         this.tamanho = tamanho;
         this.massa = massa;
         this.molho = molho;
         this.recheio = recheio;
     }
 
-    mostrarDetalhes(){
+    mostrarDetalhes() {
         console.log(`Tamanho: ${this.tamanho.medida}
             Massa: ${this.massa.tipo}
             Molho: ${this.molho.condimento}
-            Recheio; ${this.recheio.sabor}`)
+            Recheio: ${this.recheio.sabor}`);
     }
 }
 
-// utilização do builder para construir os pedidos:
-const builder = new PizzaBuilder();
+// Função para capturar as escolhas do usuário
+function criarPizza() {
+    const builder = new PizzaBuilder();
 
-const pizza1 = builder
-    .adicionarTamanho("Tradiconal (35 cm)")
-    .adicionarMassa("Tradiconal")
-    .adicionarMolho("Tomate Padrão")
-    .adicionarRecheio("Catupiry")
-    .construir();
+     const pizza = builder
+        .adicionarTamanho()
+        .adicionarMassa()
+        .adicionarMolho()
+        .adicionarSabor()
+        .construir();
 
-const pizza2 = builder
-    .adicionarTamanho("Brotinho (20 cm)")
-    .adicionarMassa("Light (zero lactose e glúten)")
-    .adicionarMolho("Tomate Padrão")
-    .adicionarRecheio("Frango")
-    .construir();
+    return pizza;
+}
+
+// Utilização do builder para construir os pedidos:
+const pizza1 = criarPizza();
+const pizza2 = criarPizza();
 
 pizza1.mostrarDetalhes();
 pizza2.mostrarDetalhes();
